@@ -1,94 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 5.0 (Python 3.8.9 on darwin)" generated="20220516 23:21:55.170" rpa="false" schemaversion="3">
-<suite id="s1" name="test weatherAPI" source="/Users/shawnchen/Desktop/robot_automation/api_testcase/test_weatherAPI.robot">
-<test id="s1-t1" name="Get Weather With State Name Should Respond 200" line="9">
-<kw name="Get Weather" library="weather_api">
-<var>${resp}</var>
-<arg>CA</arg>
-<msg timestamp="20220516 23:21:56.264" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20220516 23:21:55.203" endtime="20220516 23:21:56.264"/>
+<robot generator="Robot 5.0 (Python 3.8.9 on darwin)" generated="20220519 16:33:30.280" rpa="false" schemaversion="3">
+<suite id="s1" name="Testcase" source="/Users/shawnchen/Desktop/github/Robot-Framework-Guide-Blog/testcase">
+<suite id="s1-s1" name="Test Search" source="/Users/shawnchen/Desktop/github/Robot-Framework-Guide-Blog/testcase/test_search.robot">
+<test id="s1-s1-t1" name="Google Text And Verify Content Would Show Up" line="9">
+<kw name="TestSetup" type="SETUP">
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${SEARCH_TEXT}</arg>
+<arg>robot</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20220519 16:33:30.346" level="INFO">${SEARCH_TEXT} = robot</msg>
+<status status="PASS" starttime="20220519 16:33:30.345" endtime="20220519 16:33:30.346"/>
 </kw>
-<kw name="Verify Status Code Should Be Expected" library="keywords_common">
-<arg>${resp}</arg>
-<arg>200</arg>
-<kw name="Should Be Equal As Strings" library="BuiltIn">
-<arg>${resp.status_code}</arg>
-<arg>${statusCode}</arg>
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<msg timestamp="20220516 23:21:56.267" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<status status="PASS" starttime="20220516 23:21:56.266" endtime="20220516 23:21:56.268"/>
+<kw name="Create Webdriver" library="Selenium2Library">
+<arg>Chrome</arg>
+<arg>executable_path=${DRIVER_PATH}</arg>
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<msg timestamp="20220519 16:33:30.346" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20220519 16:33:30.346" endtime="20220519 16:33:31.745"/>
 </kw>
-<status status="PASS" starttime="20220516 23:21:56.265" endtime="20220516 23:21:56.268"/>
+<status status="PASS" starttime="20220519 16:33:30.345" endtime="20220519 16:33:31.746"/>
 </kw>
-<kw name="Verify Response Content Should Be Expected" library="keywords_common">
-<arg>${resp.json()['features'][0]['geometry']}</arg>
-<arg>${None}</arg>
-<kw name="Should Be Equal As Strings" library="BuiltIn">
-<arg>${resp}</arg>
-<arg>${content}</arg>
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<status status="PASS" starttime="20220516 23:21:56.269" endtime="20220516 23:21:56.270"/>
+<kw name="Go To" library="Selenium2Library">
+<arg>https://www.google.com</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<msg timestamp="20220519 16:33:31.746" level="INFO">Opening url 'https://www.google.com'</msg>
+<status status="PASS" starttime="20220519 16:33:31.746" endtime="20220519 16:33:32.219"/>
 </kw>
-<status status="PASS" starttime="20220516 23:21:56.268" endtime="20220516 23:21:56.270"/>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<arg>${GOOGLE_INPUT_FIELD}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20220519 16:33:32.219" endtime="20220519 16:33:32.230"/>
 </kw>
-<tag>Weather_A</tag>
-<tag>WeatherAPI</tag>
+<kw name="Input Text" library="Selenium2Library">
+<arg>${GOOGLE_INPUT_FIELD}</arg>
+<arg>${SEARCH_TEXT}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20220519 16:33:32.231" level="INFO">Typing text 'robot' into text field '//input[@name="q"]'.</msg>
+<status status="PASS" starttime="20220519 16:33:32.230" endtime="20220519 16:33:32.291"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<arg>${GOOGLE_SEARCH_BTN}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20220519 16:33:32.292" endtime="20220519 16:33:32.520"/>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<arg>${GOOGLE_SEARCH_BTN}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20220519 16:33:32.520" level="INFO">Clicking element '//input[@name="btnK"]'.</msg>
+<status status="PASS" starttime="20220519 16:33:32.520" endtime="20220519 16:33:33.940"/>
+</kw>
+<kw name="Wait Until Page Contains" library="Selenium2Library">
+<arg>${SEARCH_TEXT}</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" starttime="20220519 16:33:33.940" endtime="20220519 16:33:33.953"/>
+</kw>
+<kw name="TestTeardown" type="TEARDOWN">
+<kw name="Close Browser" library="Selenium2Library">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20220519 16:33:33.953" endtime="20220519 16:33:34.017"/>
+</kw>
+<status status="PASS" starttime="20220519 16:33:33.953" endtime="20220519 16:33:34.017"/>
+</kw>
+<tag>SearchGoogle</tag>
 <timeout value="15 minutes"/>
-<status status="PASS" starttime="20220516 23:21:55.203" endtime="20220516 23:21:56.270"/>
+<status status="PASS" starttime="20220519 16:33:30.345" endtime="20220519 16:33:34.017"/>
 </test>
-<test id="s1-t2" name="Get Weather With Invalid State Name Should Respond 400" line="15">
-<kw name="Get Weather" library="weather_api">
-<var>${resp}</var>
-<arg>RANDOM_STRING</arg>
-<msg timestamp="20220516 23:21:56.771" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
-<status status="PASS" starttime="20220516 23:21:56.271" endtime="20220516 23:21:56.772"/>
-</kw>
-<kw name="Verify Status Code Should Be Expected" library="keywords_common">
-<arg>${resp}</arg>
-<arg>400</arg>
-<kw name="Should Be Equal As Strings" library="BuiltIn">
-<arg>${resp.status_code}</arg>
-<arg>${statusCode}</arg>
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<msg timestamp="20220516 23:21:56.774" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<status status="PASS" starttime="20220516 23:21:56.773" endtime="20220516 23:21:56.774"/>
-</kw>
-<status status="PASS" starttime="20220516 23:21:56.772" endtime="20220516 23:21:56.774"/>
-</kw>
-<kw name="Verify Response Content Should Be Expected" library="keywords_common">
-<arg>${resp.json()['title']}</arg>
-<arg>Bad Request</arg>
-<kw name="Should Be Equal As Strings" library="BuiltIn">
-<arg>${resp}</arg>
-<arg>${content}</arg>
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<status status="PASS" starttime="20220516 23:21:56.776" endtime="20220516 23:21:56.776"/>
-</kw>
-<status status="PASS" starttime="20220516 23:21:56.775" endtime="20220516 23:21:56.776"/>
-</kw>
-<tag>WeatherAPI</tag>
-<tag>Weather_B</tag>
-<timeout value="15 minutes"/>
-<status status="PASS" starttime="20220516 23:21:56.271" endtime="20220516 23:21:56.776"/>
-</test>
-<doc>Verify weather gov api is working</doc>
-<status status="PASS" starttime="20220516 23:21:55.171" endtime="20220516 23:21:56.777"/>
+<doc>Go to Google.com</doc>
+<status status="PASS" starttime="20220519 16:33:30.288" endtime="20220519 16:33:34.018"/>
+</suite>
+<status status="PASS" starttime="20220519 16:33:30.281" endtime="20220519 16:33:34.018"/>
 </suite>
 <statistics>
 <total>
-<stat pass="2" fail="0" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="0" skip="0">Weather_A</stat>
-<stat pass="2" fail="0" skip="0">WeatherAPI</stat>
-<stat pass="1" fail="0" skip="0">Weather_B</stat>
+<stat pass="1" fail="0" skip="0">SearchGoogle</stat>
 </tag>
 <suite>
-<stat pass="2" fail="0" skip="0" id="s1" name="test weatherAPI">test weatherAPI</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="Testcase">Testcase</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1" name="Test Search">Testcase.Test Search</stat>
 </suite>
 </statistics>
 <errors>
